@@ -1,0 +1,177 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* FORÇANDO DARK MODE GLOBAL */
+    --background: 240 10% 4%;
+    /* #0a0a0b */
+    --foreground: 0 0% 98%;
+    /* #fafafa */
+
+    --card: 240 10% 6%;
+    /* #0e0e11 */
+    --card-foreground: 0 0% 98%;
+
+    --popover: 240 10% 5%;
+    /* #0c0c0e */
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 142 70% 45%;
+    /* Verde Emerald #22c55e */
+    --primary-foreground: 144 76% 96%;
+
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 142 70% 45%;
+
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 240 10% 4%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 6%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 5%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 142 70% 45%;
+    --primary-foreground: 144 76% 96%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 142 70% 45%;
+  }
+
+  * {
+    border-color: hsl(var(--border));
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer components {
+
+  /* Botão Principal - Mais sutil e profissional */
+  .btn-primary {
+    @apply h-10 px-4 py-2 bg-primary text-primary-foreground font-medium rounded-lg hover:bg-primary/90 transition-all duration-200 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2;
+  }
+
+  /* Botão Secundário - Outline sutil */
+  .btn-secondary {
+    @apply h-10 px-4 py-2 bg-secondary text-secondary-foreground font-medium rounded-lg hover:bg-secondary/80 transition-all duration-200 flex items-center justify-center gap-2;
+  }
+
+  /* Botão Perigo */
+  .btn-danger {
+    @apply h-10 px-4 py-2 bg-red-900/50 text-red-200 border border-red-900 font-medium rounded-lg hover:bg-red-900/70 transition-all duration-200;
+  }
+
+  /* Inputs mais limpos */
+  .input-premium {
+    @apply flex h-10 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-200;
+  }
+
+  /* Cards com profundidade e bordas sutis */
+  .card-premium {
+    @apply rounded-xl border border-border bg-card text-card-foreground shadow-sm p-6;
+  }
+
+  /* Efeito Hover em Cards */
+  .card-hover {
+    @apply hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300;
+  }
+
+  /* Badges Refinados */
+  .badge {
+    @apply inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2;
+  }
+
+  .badge-success {
+    @apply border-transparent bg-emerald-500/15 text-emerald-400 hover:bg-emerald-500/25;
+  }
+
+  .badge-warning {
+    @apply border-transparent bg-yellow-500/15 text-yellow-400 hover:bg-yellow-500/25;
+  }
+
+  .badge-danger {
+    @apply border-transparent bg-red-500/15 text-red-400 hover:bg-red-500/25;
+  }
+
+  /* Scrollbar Minimalista */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-muted-foreground/20 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground/40;
+  }
+}
+
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-out;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.5s ease-out;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
