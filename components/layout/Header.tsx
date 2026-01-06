@@ -2,12 +2,16 @@
 
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase/client';
-import { Bell, User } from 'lucide-react';
+import { Bell, User, Menu } from 'lucide-react';
+
+interface HeaderProps {
+    onMenuClick: () => void;
+}
 
 /**
  * Header com informações do usuário
  */
-export function Header() {
+export function Header({ onMenuClick }: HeaderProps) {
     const [userName, setUserName] = useState('');
 
     useEffect(() => {
@@ -22,7 +26,16 @@ export function Header() {
     }, []);
 
     return (
-        <header className="h-16 border-b border-dark-800 bg-dark-900/50 backdrop-blur-sm flex items-center justify-between px-6 lg:px-8">
+        <header className="h-16 border-b border-dark-800 bg-dark-900/50 backdrop-blur-sm flex items-center justify-between px-4 lg:px-8">
+            <div className="flex items-center gap-2 lg:hidden">
+                <button
+                    onClick={onMenuClick}
+                    className="p-2 -ml-2 text-dark-400 hover:text-white hover:bg-dark-800 rounded-lg transition-colors"
+                >
+                    <Menu className="h-6 w-6" />
+                </button>
+            </div>
+
             <div className="flex-1" />
 
             <div className="flex items-center gap-4">
