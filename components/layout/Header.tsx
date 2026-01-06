@@ -14,13 +14,7 @@ export function Header() {
         const loadUser = async () => {
             const { data: { user } } = await supabase.auth.getUser();
             if (user) {
-                const { data: profile } = await supabase
-                    .from('profiles')
-                    .select('full_name')
-                    .eq('id', user.id)
-                    .single();
-
-                setUserName(profile?.full_name || user.email?.split('@')[0] || 'Usuário');
+                setUserName(user.user_metadata?.full_name || user.email?.split('@')[0] || 'Usuário');
             }
         };
 

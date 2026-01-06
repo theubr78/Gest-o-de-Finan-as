@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { CaseService } from '@/services/case.service';
 import { FileText, FilePlus, Trash2, Download, Loader2, AlertCircle } from 'lucide-react';
 import { formatCurrency } from '@/lib/utils/formatters';
@@ -24,9 +24,9 @@ export function ProcessAttachments({ caseId }: ProcessAttachmentsProps) {
     const [isLoading, setIsLoading] = useState(true);
     const [isUploading, setIsUploading] = useState(false);
     const [error, setError] = useState('');
-    const service = new CaseService();
 
-    const loadFiles = async () => {
+    const loadFiles = useCallback(async () => {
+        const service = new CaseService();
         try {
             const data = await service.listFiles(caseId);
             setFiles(data || []);
@@ -35,16 +35,17 @@ export function ProcessAttachments({ caseId }: ProcessAttachmentsProps) {
         } finally {
             setIsLoading(false);
         }
-    };
+    }, [caseId]);
 
     useEffect(() => {
         loadFiles();
-    }, [caseId]);
+    }, [loadFiles]);
 
     const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (!file) return;
 
+        const service = new CaseService();
         setIsUploading(true);
         setError('');
 
@@ -63,6 +64,7 @@ export function ProcessAttachments({ caseId }: ProcessAttachmentsProps) {
     const handleDelete = async (fileName: string) => {
         if (!confirm('Tem certeza que deseja excluir esse arquivo?')) return;
 
+        const service = new CaseService();
         try {
             await service.deleteFile(caseId, fileName);
             setFiles(files.filter(f => f.name !== fileName));
@@ -72,6 +74,7 @@ export function ProcessAttachments({ caseId }: ProcessAttachmentsProps) {
     };
 
     const handleDownload = async (fileName: string) => {
+        const service = new CaseService();
         try {
             const url = await service.getFileUrl(caseId, fileName);
             window.open(url, '_blank');

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { CaseService } from '@/services/case.service';
 import { CaseModel } from '@/types/database.types';
 import { ProcessFormModal } from '@/components/cases/ProcessFormModal';
@@ -16,9 +16,9 @@ export default function ProcessosPage() {
     const [editingCase, setEditingCase] = useState<CaseModel | null>(null);
     const [search, setSearch] = useState('');
     const [expandedCaseId, setExpandedCaseId] = useState<string | null>(null);
-    const service = new CaseService();
 
-    const loadCases = async () => {
+    const loadCases = useCallback(async () => {
+        const service = new CaseService();
         setIsLoading(true);
         try {
             const data = await service.listCases();
@@ -28,11 +28,11 @@ export default function ProcessosPage() {
         } finally {
             setIsLoading(false);
         }
-    };
+    }, []);
 
     useEffect(() => {
         loadCases();
-    }, []);
+    }, [loadCases]);
 
     const handleCreateSuccess = async () => {
         await loadCases();
@@ -49,6 +49,7 @@ export default function ProcessosPage() {
     };
 
     const handleModalSubmit = async (data: any) => {
+        const service = new CaseService();
         if (editingCase) {
             await service.updateCase(editingCase.id, data);
         } else {
