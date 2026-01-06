@@ -65,9 +65,9 @@ export class ClientRepository extends BaseRepository<Client> {
      */
     async update(id: string, data: Partial<Client>, userId: string): Promise<Client> {
         const supabase = getSupabase();
-        const { data: updatedClient, error } = await supabase
-            .from('clients')
-            .update(data as any)
+        const { data: updatedClient, error } = await (supabase
+            .from('clients') as any)
+            .update(data)
             .eq('id', id)
             .eq('user_id', userId)
             .select()

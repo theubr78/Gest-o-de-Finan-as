@@ -52,9 +52,9 @@ export class CaseRepository extends BaseRepository<CaseModel> {
 
     async update(id: string, data: Partial<CaseModel>, userId: string): Promise<CaseModel> {
         const supabase = getSupabase();
-        const { data: updated, error } = await supabase
-            .from('cases')
-            .update(data as any)
+        const { data: updated, error } = await (supabase
+            .from('cases') as any)
+            .update(data)
             .eq('id', id)
             .eq('user_id', userId)
             .select()

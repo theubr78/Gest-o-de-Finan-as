@@ -65,9 +65,9 @@ export class TransactionRepository extends BaseRepository<Transaction> {
      */
     async update(id: string, data: Partial<Transaction>, userId: string): Promise<Transaction> {
         const supabase = getSupabase();
-        const { data: updated, error } = await supabase
-            .from('transactions')
-            .update(data as any)
+        const { data: updated, error } = await (supabase
+            .from('transactions') as any)
+            .update(data)
             .eq('id', id)
             .eq('user_id', userId)
             .select()
