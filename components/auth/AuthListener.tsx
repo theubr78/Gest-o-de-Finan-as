@@ -1,12 +1,12 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 export function AuthListener() {
     const router = useRouter();
-    const supabase = createClientComponentClient();
+    const [supabase] = useState(() => createClientComponentClient());
 
     useEffect(() => {
         const {

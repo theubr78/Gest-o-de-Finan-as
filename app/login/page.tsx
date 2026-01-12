@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
     const router = useRouter();
-    const supabase = createClientComponentClient();
+    const [supabase] = useState(() => createClientComponentClient());
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
@@ -25,8 +25,7 @@ export default function LoginPage() {
                     password,
                 });
                 if (error) throw error;
-                router.refresh();
-                router.push('/dashboard');
+                // Navigation is handled by AuthListener or middleware
             } else {
                 const { error } = await supabase.auth.signUp({
                     email,
@@ -42,9 +41,9 @@ export default function LoginPage() {
             }
         } catch (err: any) {
             setError(err.message || 'Erro ao processar solicitação');
-        } finally {
-            setLoading(false);
+            setLoading(false); // Only enable button if error
         }
+        // If success, keep loading true to prevent double clicks while redirecting
     };
 
     return (

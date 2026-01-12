@@ -80,7 +80,7 @@ export class FinanceService {
     /**
      * Lista transações por período
      */
-    async listTransactionsByPeriod(period: PeriodFilter): Promise<Transaction[]> {
+    async listTransactionsByPeriod(period: PeriodFilter): Promise<TransactionWithClient[]> {
         const userId = await getCurrentUserId();
         const { startDate, endDate } = this.getPeriodDates(period);
 

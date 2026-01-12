@@ -26,7 +26,7 @@ export function useTransactions() {
         try {
             const currentPeriod = filterPeriod || period;
             const data = await service.listTransactionsByPeriod(currentPeriod);
-            setTransactions(data as any);
+            setTransactions(data);
             setError(null);
         } catch (err: any) {
             console.error('Erro ao carregar transações:', err);

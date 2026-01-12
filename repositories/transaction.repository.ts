@@ -112,18 +112,21 @@ export class TransactionRepository extends BaseRepository<Transaction> {
     /**
      * Filtra transações por período (para dashboard)
      */
-    async getByDateRange(userId: string, startDate: string, endDate: string): Promise<Transaction[]> {
+    async getByDateRange(userId: string, startDate: string, endDate: string): Promise<TransactionWithClient[]> {
         const supabase = getSupabase();
         const { data, error } = await supabase
             .from('transactions')
-            .select('*')
+            .select(`
+                *,
+                client:clients(id, name, whatsapp)
+            `)
             .eq('user_id', userId)
             .gte('due_date', startDate)
             .lte('due_date', endDate)
             .order('due_date', { ascending: false });
 
         if (error) throw error;
-        return data || [];
+        return data as any || [];
     }
 
     /**
